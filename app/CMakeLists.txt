@@ -1,4 +1,4 @@
-project(meshup-app)
+project(meshup-app C CXX)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
