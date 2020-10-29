@@ -1,3 +1,5 @@
+#include "meshup/ogl/Shader.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -8,13 +10,11 @@
 
 #include <iostream>
 
-static void glfw_error_callback(int error, const char* description)
-{
+static void glfw_error_callback(int error, const char* description) {
    std::cerr << "GLFW error [" << error << "]: " << description << "\n";
 }
 
-int main (int argc, char** argv)
-{
+int main (int argc, char** argv) {
    glfwSetErrorCallback(glfw_error_callback);
 
    if (!glfwInit()) {
@@ -42,6 +42,11 @@ int main (int argc, char** argv)
    ImGui_ImplGlfw_InitForOpenGL(window, true);
    ImGui_ImplOpenGL3_Init("#version 330" /* glsl version string*/);
 
+   auto shader = meshup::ogl::Shader::create();
+   if (!shader.isValid()) {
+      std::exit(EXIT_FAILURE);
+   }
+
    ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
    while (!glfwWindowShouldClose(window)) {
@@ -51,13 +56,8 @@ int main (int argc, char** argv)
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
 
-      static float f = 0.0f;
-      static int counter = 0;
-
       ImGui::Begin("Hello");
-
       ImGui::Text("World!");
-
       ImGui::End();
 
       // Rendering
