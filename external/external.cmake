@@ -38,7 +38,6 @@ set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
 
 FetchContent_MakeAvailable(glfw)
 
-
 #
 # IMGUI
 #
@@ -73,3 +72,14 @@ if(NOT imgui_POPULATED)
 
   target_link_libraries(${IMGUI_LIB_NAME} OpenGL::OpenGL glad glfw)
 endif()
+
+#
+# SPDLOG
+#
+
+FetchContent_Declare(spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog
+        GIT_TAG cbe9448650176797739dbab13961ef4c07f4290f # 1.8.1
+)
+
+FetchContent_MakeAvailable(spdlog)
