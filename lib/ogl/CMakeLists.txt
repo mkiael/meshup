@@ -1,7 +1,9 @@
 project(meshup-ogl CXX)
 
 add_library(${PROJECT_NAME}
+        include/meshup/ogl/Model.h
         include/meshup/ogl/Shader.h
+        src/meshup/ogl/Model.cpp
         src/meshup/ogl/Shader.cpp
 )
 

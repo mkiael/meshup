@@ -4,12 +4,11 @@ namespace meshup::ogl {
 
 class Shader {
 public:
-   static Shader create();
+   Shader();
    bool isValid() const;
    void use();
 
 private:
-   explicit Shader(unsigned int _shaderProgramId);
    unsigned int shaderProgramId;
 };
 

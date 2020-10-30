@@ -1,3 +1,4 @@
+#include "meshup/ogl/Model.h"
 #include "meshup/ogl/Shader.h"
 
 #include "imgui.h"
@@ -42,10 +43,12 @@ int main (int argc, char** argv) {
    ImGui_ImplGlfw_InitForOpenGL(window, true);
    ImGui_ImplOpenGL3_Init("#version 330" /* glsl version string*/);
 
-   auto shader = meshup::ogl::Shader::create();
+   meshup::ogl::Shader shader;
    if (!shader.isValid()) {
       std::exit(EXIT_FAILURE);
    }
+
+   meshup::ogl::Model model;
 
    ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
@@ -56,19 +59,22 @@ int main (int argc, char** argv) {
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
 
-      ImGui::Begin("Hello");
-      ImGui::Text("World!");
-      ImGui::End();
-
-      // Rendering
-      ImGui::Render();
-
       int display_w, display_h;
       glfwGetFramebufferSize(window, &display_w, &display_h);
 
       glViewport(0, 0, display_w, display_h);
       glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
       glClear(GL_COLOR_BUFFER_BIT);
+
+      shader.use();
+      model.render();
+
+      ImGui::Begin("Hello");
+      ImGui::Text("World!");
+      ImGui::End();
+
+      // Rendering
+      ImGui::Render();
 
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

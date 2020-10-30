@@ -74,11 +74,7 @@ unsigned int createShader() {
 
 }// namespace
 
-Shader Shader::create() {
-   return Shader(createShader());
-}
-
-Shader::Shader(unsigned int _shaderProgramId) : shaderProgramId(_shaderProgramId) {
+Shader::Shader() : shaderProgramId(createShader()) {
 }
 
 bool Shader::isValid() const {
