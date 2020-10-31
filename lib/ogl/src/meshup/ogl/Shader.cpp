@@ -1,6 +1,8 @@
 #include "meshup/ogl/Shader.h"
 
 #include "glad/glad.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "spdlog/spdlog.h"
 
 namespace meshup::ogl {
@@ -31,8 +33,11 @@ unsigned int createShader() {
    const char* vertexShaderSource =
            "#version 330 core\n"
            "layout (location= 0) in vec3 aPos;\n"
+           "uniform mat4 model;\n"
+           "uniform mat4 view;\n"
+           "uniform mat4 projection;\n"
            "void main() {\n"
-           "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+           "   gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
            "}\0";
 
    const char* fragmentShaderSource =
@@ -74,15 +79,31 @@ unsigned int createShader() {
 
 }// namespace
 
-Shader::Shader() : shaderProgramId(createShader()) {
+Shader::Shader() : shaderProgramId(0), modelLocation(-1), viewLocation(-1), projectionLocation(-1) {
+   shaderProgramId = createShader();
+   modelLocation = glGetUniformLocation(shaderProgramId, "model");
+   viewLocation = glGetUniformLocation(shaderProgramId, "view");
+   projectionLocation = glGetUniformLocation(shaderProgramId, "projection");
 }
 
 bool Shader::isValid() const {
-   return shaderProgramId != 0;
+   return shaderProgramId != 0 && modelLocation != -1 && viewLocation != -1 && projectionLocation != -1;
 }
 
 void Shader::use() {
    glUseProgram(shaderProgramId);
+}
+
+void Shader::setModel(const glm::mat4& m) {
+   glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(m));
+}
+
+void Shader::setView(const glm::mat4& m) {
+   glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(m));
+}
+
+void Shader::setProjection(const glm::mat4& m) {
+   glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(m));
 }
 
 }// namespace meshup::ogl
