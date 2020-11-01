@@ -7,15 +7,25 @@
 
 #include "glad/glad.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "GLFW/glfw3.h"
 
 #include <iostream>
+
+namespace {
+
+constexpr int WIN_WIDTH = 1280;
+constexpr int WIN_HEIGHT = 720;
+
+}// namespace
 
 static void glfw_error_callback(int error, const char* description) {
    std::cerr << "GLFW error [" << error << "]: " << description << "\n";
 }
 
-int main (int argc, char** argv) {
+int main(int argc, char** argv) {
    glfwSetErrorCallback(glfw_error_callback);
 
    if (!glfwInit()) {
@@ -25,7 +35,7 @@ int main (int argc, char** argv) {
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-   GLFWwindow* window = glfwCreateWindow(1280, 720, "Meshup", NULL, NULL);
+   GLFWwindow* window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, "Meshup", NULL, NULL);
    if (!window) {
       std::exit(EXIT_FAILURE);
    }
@@ -48,6 +58,14 @@ int main (int argc, char** argv) {
       std::exit(EXIT_FAILURE);
    }
 
+   shader.use();
+
+   auto projMat = glm::perspective(glm::radians(45.f), (float) WIN_WIDTH / (float) WIN_HEIGHT, 0.1f, 100.f);
+   shader.setProjection(projMat);
+
+   auto viewMat = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -10.f));
+   shader.setView(viewMat);
+
    meshup::ogl::Model model;
 
    ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
@@ -67,6 +85,11 @@ int main (int argc, char** argv) {
       glClear(GL_COLOR_BUFFER_BIT);
 
       shader.use();
+
+      auto modelMat = glm::mat4(1.f);
+      modelMat = glm::rotate(modelMat, glm::radians(45.f), glm::vec3(0.f, 0.f, 1.f));
+      shader.setModel(modelMat);
+
       model.render();
 
       ImGui::Begin("Hello");
