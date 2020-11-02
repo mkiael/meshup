@@ -1,15 +1,14 @@
-project(meshup-ogl CXX)
+project(meshup-geom CXX)
 
 add_library(${PROJECT_NAME}
-        include/meshup/ogl/Model.h
-        include/meshup/ogl/Shader.h
-        src/meshup/ogl/Model.cpp
-        src/meshup/ogl/Shader.cpp
+        include/meshup/geom/TriangleMesh.h
+        include/meshup/geom/Vertex.h
+        src/meshup/geom/TriangleMesh.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
         PRIVATE
-            cxx_std_17
+        cxx_std_17
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -20,8 +19,5 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-        glad
         glm
-        spdlog
-        meshup-geom
 )
