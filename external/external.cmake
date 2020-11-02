@@ -94,3 +94,14 @@ FetchContent_Declare(spdlog
 )
 
 FetchContent_MakeAvailable(spdlog)
+
+#
+# CATCH 2
+#
+
+FetchContent_Declare(catch
+        GIT_REPOSITORY https://github.com/catchorg/Catch2
+        GIT_TAG ff349a50bfc6214b4081f4ca63c7de35e2162f60 # 2.13.3
+        )
+
+FetchContent_MakeAvailable(catch)
