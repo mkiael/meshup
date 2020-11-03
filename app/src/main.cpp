@@ -63,12 +63,16 @@ int main(int argc, char** argv) {
    auto projMat = glm::perspective(glm::radians(45.f), (float) WIN_WIDTH / (float) WIN_HEIGHT, 0.1f, 100.f);
    shader.setProjection(projMat);
 
-   auto viewMat = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -10.f));
+   auto viewMat = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -5.f));
    shader.setView(viewMat);
+
+   shader.setLightColor(glm::vec3(1.f, 1.f, 1.f));
+   shader.setObjectColor(glm::vec3(.5f, .2f, .1f));
+   shader.setLightPosition(glm::vec3(10.f, 10.f, -10.f));
 
    meshup::ogl::Model model;
 
-   ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+   ImVec4 clear_color = ImVec4(.0f, .0f, .0f, 1.f);
 
    while (!glfwWindowShouldClose(window)) {
       glfwPollEvents();
@@ -87,7 +91,8 @@ int main(int argc, char** argv) {
       shader.use();
 
       auto modelMat = glm::mat4(1.f);
-      modelMat = glm::rotate(modelMat, glm::radians(45.f), glm::vec3(0.f, 0.f, 1.f));
+      modelMat = glm::rotate(modelMat, glm::radians(20.f), glm::vec3(1.f, 0.f, 0.f));
+      modelMat = glm::rotate(modelMat, glm::radians(20.f), glm::vec3(0.f, 1.f, 0.f));
       shader.setModel(modelMat);
 
       model.render();

@@ -79,6 +79,8 @@ Model::Model() {
 
    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(geom::Vertex), (void*) 0);
    glEnableVertexAttribArray(0);
+   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(geom::Vertex), (void*) sizeof(glm::vec3));
+   glEnableVertexAttribArray(1);
 
    glBindVertexArray(0);
 }
