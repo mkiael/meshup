@@ -52,19 +52,19 @@ Model::Model() {
 
    for (size_t i = 0; i < 108;) {
       geom::Vertex v1;
-      v1.position[0] = vertices[++i];
-      v1.position[1] = vertices[++i];
-      v1.position[2] = vertices[++i];
+      v1.position[0] = vertices[i++];
+      v1.position[1] = vertices[i++];
+      v1.position[2] = vertices[i++];
 
       geom::Vertex v2;
-      v2.position[0] = vertices[++i];
-      v2.position[1] = vertices[++i];
-      v2.position[2] = vertices[++i];
+      v2.position[0] = vertices[i++];
+      v2.position[1] = vertices[i++];
+      v2.position[2] = vertices[i++];
 
       geom::Vertex v3;
-      v3.position[0] = vertices[++i];
-      v3.position[1] = vertices[++i];
-      v3.position[2] = vertices[++i];
+      v3.position[0] = vertices[i++];
+      v3.position[1] = vertices[i++];
+      v3.position[2] = vertices[i++];
 
       mesh.addFace(v1, v2, v3);
    }
