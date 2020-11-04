@@ -53,6 +53,8 @@ int main(int argc, char** argv) {
    ImGui_ImplGlfw_InitForOpenGL(window, true);
    ImGui_ImplOpenGL3_Init("#version 330" /* glsl version string*/);
 
+   glEnable(GL_DEPTH_TEST);
+
    meshup::ogl::Shader shader;
    if (!shader.isValid()) {
       std::exit(EXIT_FAILURE);
@@ -68,11 +70,17 @@ int main(int argc, char** argv) {
 
    shader.setLightColor(glm::vec3(1.f, 1.f, 1.f));
    shader.setObjectColor(glm::vec3(.5f, .2f, .1f));
-   shader.setLightPosition(glm::vec3(10.f, 10.f, -10.f));
 
    meshup::ogl::Model model;
 
    ImVec4 clear_color = ImVec4(.0f, .0f, .0f, 1.f);
+
+   float pitchAngle = 0.f;
+   float yawAngle = 0.f;
+
+   float lightX = 10.f;
+   float lightY = 10.f;
+   float lightZ = -10.f;
 
    while (!glfwWindowShouldClose(window)) {
       glfwPollEvents();
@@ -86,19 +94,28 @@ int main(int argc, char** argv) {
 
       glViewport(0, 0, display_w, display_h);
       glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       shader.use();
 
+      shader.setLightPosition(glm::vec3(lightX, lightY, lightZ));
+
       auto modelMat = glm::mat4(1.f);
-      modelMat = glm::rotate(modelMat, glm::radians(20.f), glm::vec3(1.f, 0.f, 0.f));
-      modelMat = glm::rotate(modelMat, glm::radians(20.f), glm::vec3(0.f, 1.f, 0.f));
+      modelMat = glm::rotate(modelMat, glm::radians(pitchAngle), glm::vec3(1.f, 0.f, 0.f));
+      modelMat = glm::rotate(modelMat, glm::radians(yawAngle), glm::vec3(0.f, 1.f, 0.f));
       shader.setModel(modelMat);
 
       model.render();
 
-      ImGui::Begin("Hello");
-      ImGui::Text("World!");
+      ImGui::Begin("Object");
+      ImGui::SliderFloat("Pitch", &pitchAngle, 0.f, 360.f);
+      ImGui::SliderFloat("Yaw", &yawAngle, 0.f, 360.f);
+      ImGui::End();
+
+      ImGui::Begin("Light");
+      ImGui::SliderFloat("Light X", &lightX, -10.f, 10.f);
+      ImGui::SliderFloat("Light Y", &lightY, -10.f, 10.f);
+      ImGui::SliderFloat("Light Z", &lightZ, -10.f, 10.f);
       ImGui::End();
 
       // Rendering

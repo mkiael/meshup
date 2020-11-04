@@ -13,6 +13,7 @@ private:
    geom::TriangleMesh mesh;
    unsigned int vao;
    unsigned int vbo;
+   unsigned int ibo;
 };
 
 }// namespace meshup::ogl

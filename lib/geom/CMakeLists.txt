@@ -2,7 +2,6 @@ project(meshup-geom CXX)
 
 add_library(${PROJECT_NAME}
         include/meshup/geom/TriangleMesh.h
-        include/meshup/geom/Vertex.h
         src/meshup/geom/TriangleMesh.cpp
 )
 

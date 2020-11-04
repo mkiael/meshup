@@ -66,7 +66,7 @@ unsigned int createShader() {
            "uniform vec3 lightPosition;\n"
            "\n"
            "void main() {\n"
-           "   float ambientFactor = 0.1;\n"
+           "   float ambientFactor = 0.5;\n"
            "   vec3 ambient = ambientFactor * lightColor;\n"
            "   vec3 lightDirection = normalize(lightPosition - i.fragmentPos);\n"
            "   vec3 vertexNormal = normalize(i.vertexNormal);\n"
