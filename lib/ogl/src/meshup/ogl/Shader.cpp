@@ -11,6 +11,18 @@ namespace {
 
 constexpr size_t INFO_LOG_SIZE = 512;
 
+std::string getShaderAsString(unsigned int shaderType) {
+   switch (shaderType) {
+      case GL_VERTEX_SHADER:
+         return "vertex";
+      case GL_FRAGMENT_SHADER:
+         return "fragment";
+      default:
+         return "???";
+   }
+}
+
+
 unsigned int compileShader(unsigned int shaderType, const std::string& shaderCode) {
    unsigned int shaderId = glCreateShader(shaderType);
    const char* src = shaderCode.c_str();
@@ -24,7 +36,7 @@ unsigned int compileShader(unsigned int shaderType, const std::string& shaderCod
    } else {
       char log[INFO_LOG_SIZE];
       glGetShaderInfoLog(shaderId, INFO_LOG_SIZE, nullptr, log);
-      spdlog::error("Failed to compile vertex shader: {}", log);
+      spdlog::error("Failed to compile {} shader: {}", getShaderAsString(shaderType), log);
       return 0;
    }
 }
@@ -46,9 +58,9 @@ unsigned int createShader() {
            "uniform mat4 projection;\n"
            "\n"
            "void main() {\n"
-           "   gl_Position = projection * view * model * vec4(inVertexPos.x, inVertexPos.y, inVertexPos.z, 1.0);\n"
            "   o.fragmentPos = vec3(model * vec4(inVertexPos, 1.0));\n"
-           "   o.vertexNormal = inVertexNormal;\n"
+           "   o.vertexNormal = mat3(transpose(inverse(model))) * inVertexNormal;\n"
+           "   gl_Position = projection * view * vec4(o.fragmentPos, 1.0);\n"
            "}\0";
 
    const char* fragmentShaderSource =
