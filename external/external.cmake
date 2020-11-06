@@ -105,3 +105,9 @@ FetchContent_Declare(catch
         )
 
 FetchContent_MakeAvailable(catch)
+
+FetchContent_GetProperties(catch
+        SOURCE_DIR catch_SOURCE_DIR
+)
+
+list(APPEND CMAKE_MODULE_PATH ${catch_SOURCE_DIR}/contrib)
