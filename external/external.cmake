@@ -81,7 +81,7 @@ if(NOT imgui_POPULATED)
       ${imgui_SOURCE_DIR}/examples
   )
 
-  target_link_libraries(${IMGUI_LIB_NAME} OpenGL::OpenGL glad glfw)
+  target_link_libraries(${IMGUI_LIB_NAME} OpenGL::GL glad glfw)
 endif()
 
 #
