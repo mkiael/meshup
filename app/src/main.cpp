@@ -1,3 +1,4 @@
+#include "meshup/loader/ObjLoader.h"
 #include "meshup/ogl/Model.h"
 #include "meshup/ogl/Shader.h"
 
@@ -71,7 +72,9 @@ int main(int argc, char** argv) {
    shader.setLightColor(glm::vec3(1.f, 1.f, 1.f));
    shader.setObjectColor(glm::vec3(.5f, .2f, .1f));
 
-   meshup::ogl::Model model;
+   auto mesh = meshup::loader::readObj("assets/utah_teapot.obj");
+   mesh.calculateNormals();
+   meshup::ogl::Model model(mesh);
 
    ImVec4 clear_color = ImVec4(.0f, .0f, .0f, 1.f);
 

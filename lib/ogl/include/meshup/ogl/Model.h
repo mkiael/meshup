@@ -6,7 +6,7 @@ namespace meshup::ogl {
 
 class Model {
 public:
-   Model();
+   Model(const geom::TriangleMesh& _mesh);
    void render();
 
 private:

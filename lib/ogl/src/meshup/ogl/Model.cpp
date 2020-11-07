@@ -6,31 +6,7 @@
 
 namespace meshup::ogl {
 
-Model::Model() {
-   geom::TriangleMesh::VertexRef v0 = mesh.addVertex(.5f, -.5f, .5f);
-   geom::TriangleMesh::VertexRef v1 = mesh.addVertex(.5f, -.5f, -.5f);
-   geom::TriangleMesh::VertexRef v2 = mesh.addVertex(.5f, .5f, -.5f);
-   geom::TriangleMesh::VertexRef v3 = mesh.addVertex(.5f, .5f, .5f);
-   geom::TriangleMesh::VertexRef v4 = mesh.addVertex(-.5f, -.5f, .5f);
-   geom::TriangleMesh::VertexRef v5 = mesh.addVertex(-.5f, -.5f, -.5f);
-   geom::TriangleMesh::VertexRef v6 = mesh.addVertex(-.5f, .5f, -.5f);
-   geom::TriangleMesh::VertexRef v7 = mesh.addVertex(-.5f, .5f, .5f);
-
-   mesh.addFace(v4, v0, v3);
-   mesh.addFace(v4, v3, v7);
-   mesh.addFace(v0, v1, v2);
-   mesh.addFace(v0, v2, v3);
-   mesh.addFace(v1, v5, v6);
-   mesh.addFace(v1, v6, v2);
-   mesh.addFace(v5, v4, v7);
-   mesh.addFace(v5, v7, v6);
-   mesh.addFace(v7, v3, v2);
-   mesh.addFace(v7, v2, v6);
-   mesh.addFace(v0, v1, v5);
-   mesh.addFace(v0, v5, v4);
-
-   mesh.calculateNormals();
-
+Model::Model(const geom::TriangleMesh& _mesh) : mesh(_mesh) {
    glGenVertexArrays(1, &vao);
    glGenBuffers(1, &vbo);
    glGenBuffers(1, &ibo);
