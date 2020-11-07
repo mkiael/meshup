@@ -44,6 +44,14 @@ void TriangleMesh::calculateNormals() {
    }
 }
 
+TriangleMesh::Vertex& TriangleMesh::getVertex(TriangleMesh::VertexRef ref) {
+   return vertices[ref];
+}
+
+const TriangleMesh::Vertex& TriangleMesh::getVertex(TriangleMesh::VertexRef ref) const {
+   return vertices[ref];
+}
+
 size_t TriangleMesh::getNrOfVertexIndices() const {
    return vertexIndices.size();
 }
@@ -66,6 +74,14 @@ size_t TriangleMesh::getVertexDataSize() const {
 
 const TriangleMesh::Vertex* TriangleMesh::getVertexData() const {
    return &vertices[0];
+}
+
+TriangleMesh::Face& TriangleMesh::getFace(FaceRef ref) {
+   return faces[ref];
+}
+
+const TriangleMesh::Face& TriangleMesh::getFace(FaceRef ref) const {
+   return faces[ref];
 }
 
 }// namespace meshup::geom

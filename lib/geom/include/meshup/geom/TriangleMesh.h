@@ -12,7 +12,6 @@ public:
    using VertexRef = unsigned int;
    using FaceRef = unsigned int;
 
-private:
    struct Vertex {
       glm::vec3 position;
       glm::vec3 normal;
@@ -23,10 +22,12 @@ private:
       glm::vec3 normal;
    };
 
-public:
    VertexRef addVertex(float x, float y, float z);
    FaceRef addFace(VertexRef v1, VertexRef v2, VertexRef v3);
    void calculateNormals();
+
+   Vertex& getVertex(VertexRef ref);
+   const Vertex& getVertex(VertexRef ref) const;
 
    size_t getNrOfVertexIndices() const;
    size_t getVertexIndexDataSize() const;
@@ -35,6 +36,9 @@ public:
    size_t getNrOfVertices() const;
    size_t getVertexDataSize() const;
    const Vertex* getVertexData() const;
+
+   Face& getFace(FaceRef ref);
+   const Face& getFace(FaceRef ref) const;
 
 private:
    std::vector<VertexRef> vertexIndices;
