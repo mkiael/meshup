@@ -6,7 +6,7 @@ add_library(${PROJECT_NAME}
 )
 
 target_compile_features(${PROJECT_NAME}
-        PRIVATE
+        PUBLIC
             cxx_std_17
 )
 
