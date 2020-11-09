@@ -1,8 +1,10 @@
 project(meshup-ogl CXX)
 
 add_library(${PROJECT_NAME}
+        include/meshup/ogl/Camera.h
         include/meshup/ogl/Model.h
         include/meshup/ogl/Shader.h
+        src/meshup/ogl/Camera.cpp
         src/meshup/ogl/Model.cpp
         src/meshup/ogl/Shader.cpp
 )
