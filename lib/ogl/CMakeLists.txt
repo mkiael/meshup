@@ -25,3 +25,5 @@ target_link_libraries(${PROJECT_NAME}
         spdlog
         meshup-geom
 )
+
+add_subdirectory(test)
