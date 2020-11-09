@@ -4,6 +4,7 @@ project(test-meshup-ogl)
 
 add_executable(${PROJECT_NAME}
         src/main.cpp
+        src/test_Camera.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
