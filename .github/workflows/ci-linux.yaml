@@ -1,0 +1,27 @@
+name: Linux CI
+
+on: [push, pull_request]
+
+jobs:
+   ci:
+      runs-on: ubuntu-20.04
+
+      steps:
+         - uses: actions/checkout@v2
+         - uses: actions/setup-python@v2
+           with: 
+              python-version: 3.8
+
+         - name: Install
+           run: |
+              pip install cmake==3.18.2.post1 --upgrade
+              sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libglfw3-dev xorg-dev
+
+         - name: CMake
+           run: |
+              cmake --version
+              cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+
+         - name: Build
+           run: |
+              cmake --build build
