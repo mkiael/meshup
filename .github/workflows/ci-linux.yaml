@@ -15,7 +15,7 @@ jobs:
          - name: Install
            run: |
               pip install cmake==3.18.2.post1 --upgrade
-              sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libglfw3-dev
+              sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev libglfw3-dev libxinerama-dev
 
          - name: CMake
            run: |
