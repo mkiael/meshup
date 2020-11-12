@@ -6,14 +6,17 @@ namespace meshup::ogl {
 
 class Camera {
 public:
-   Camera(const glm::vec3& position,
-          const glm::vec3& target,
-          const glm::vec3& up);
+   Camera(const glm::vec3& _target);
 
-   const glm::mat4& getViewMatrix() const;
+   void setDistance(float dist);
+
+   glm::mat4 getViewMatrix() const;
 
 private:
-   glm::mat4 viewMatrix;
+   glm::vec3 target;
+   glm::vec3 direction;
+   glm::vec3 up;
+   float distance;
 };
 
 }// namespace meshup::ogl
