@@ -4,11 +4,15 @@
 
 namespace meshup::ogl {
 
-Camera::Camera(const glm::vec3& position, const glm::vec3& target, const glm::vec3& up) : viewMatrix(glm::lookAt(position, target, up)) {
+Camera::Camera(const glm::vec3& _target) : target(_target), direction(0.f, 0.f, 1.f), up(0.f, 1.f, 0.f), distance(0.f) {
 }
 
-const glm::mat4& Camera::getViewMatrix() const {
-   return viewMatrix;
+void Camera::setDistance(float dist) {
+   distance = dist;
+}
+
+glm::mat4 Camera::getViewMatrix() const {
+   return glm::lookAt(direction * distance, target, up);
 }
 
 }// namespace meshup::ogl

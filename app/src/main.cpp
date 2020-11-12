@@ -1,4 +1,5 @@
 #include "meshup/loader/ObjLoader.h"
+#include "meshup/ogl/Camera.h"
 #include "meshup/ogl/Model.h"
 #include "meshup/ogl/Shader.h"
 
@@ -56,6 +57,8 @@ int main(int argc, char** argv) {
 
    glEnable(GL_DEPTH_TEST);
 
+   meshup::ogl::Camera camera(glm::vec3(0.f, 0.f, 0.f));
+
    meshup::ogl::Shader shader;
    if (!shader.isValid()) {
       std::exit(EXIT_FAILURE);
@@ -64,11 +67,9 @@ int main(int argc, char** argv) {
    shader.use();
 
    auto projMat = glm::perspective(glm::radians(45.f), (float) WIN_WIDTH / (float) WIN_HEIGHT, 0.1f, 100.f);
+
    shader.setProjection(projMat);
-
-   auto viewMat = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -5.f));
-   shader.setView(viewMat);
-
+   shader.setView(camera.getViewMatrix());
    shader.setLightColor(glm::vec3(1.f, 1.f, 1.f));
    shader.setObjectColor(glm::vec3(.5f, .2f, .1f));
 
@@ -77,6 +78,8 @@ int main(int argc, char** argv) {
    meshup::ogl::Model model(mesh);
 
    ImVec4 clear_color = ImVec4(.0f, .0f, .0f, 1.f);
+
+   float distFromTarget = 0.f;
 
    float pitchAngle = 0.f;
    float yawAngle = 0.f;
@@ -108,9 +111,13 @@ int main(int argc, char** argv) {
       modelMat = glm::rotate(modelMat, glm::radians(yawAngle), glm::vec3(0.f, 1.f, 0.f));
       shader.setModel(modelMat);
 
+      camera.setDistance(distFromTarget);
+      shader.setView(camera.getViewMatrix());
+
       model.render();
 
       ImGui::Begin("Object");
+      ImGui::SliderFloat("Distance", &distFromTarget, -20.f, 20.f);
       ImGui::SliderFloat("Pitch", &pitchAngle, 0.f, 360.f);
       ImGui::SliderFloat("Yaw", &yawAngle, 0.f, 360.f);
       ImGui::End();
