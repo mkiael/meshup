@@ -1,21 +1,27 @@
 #pragma once
 
 #include "glm/mat4x4.hpp"
+#include "glm/gtc/quaternion.hpp"
 
 namespace meshup::ogl {
 
 class Camera {
 public:
-   Camera(const glm::vec3& _target);
+   Camera();
+
+   void setTarget(float x, float y, float z);
 
    void setDistance(float dist);
+
+   void setRotation(float x, float y);
 
    glm::mat4 getViewMatrix() const;
 
 private:
+   glm::vec3 rotate() const;
+
    glm::vec3 target;
-   glm::vec3 direction;
-   glm::vec3 up;
+   glm::quat rot;
    float distance;
 };
 
